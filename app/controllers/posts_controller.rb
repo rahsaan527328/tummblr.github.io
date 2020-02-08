@@ -37,10 +37,13 @@ class PostsController < ApplicationController
 	end
 
 	def destroy
-		@post = Post.find(params[:id])
-		@post.destroy
-		
-		redirect_to root_path
+	@patient = Patient.find(params[:id])
+    @patient.destroy
+    if @post.update(params[:post].permit(:title, :body))
+			redirect_to @post
+   	else
+			render 'edit'
+		end
 	end
 
 	private
